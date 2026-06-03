@@ -20,10 +20,10 @@ logger = logging.getLogger("Portfolio_Agent")
 app = FastAPI(title="Malik's Agentic Portfolio Assistant API")
 
 # 2. ENABLE CROSS-ORIGIN BROWSING LAYER
-# This allows your frontend website to securely communicate with the API
+# This allows the frontend website to securely communicate with the API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins to access your API
+    allow_origins=["*"],  # Allows all origins to access the API
     allow_credentials=True,
     allow_methods=["*"],  # Allows all HTTP methods (POST, GET, OPTIONS, etc.)
     allow_headers=["*"],  # Allows all headers
