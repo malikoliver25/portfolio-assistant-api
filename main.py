@@ -5,6 +5,7 @@ import json
 import requests
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware # 1. Import Middleware
 from pydantic import BaseModel
 from typing import TypedDict, List
 
@@ -18,7 +19,17 @@ logger = logging.getLogger("Portfolio_Agent")
 
 app = FastAPI(title="Malik's Agentic Portfolio Assistant API")
 
-# 2. Optimized Production RAG Layer: Enriched Semantic Context Data
+# 2. ENABLE CROSS-ORIGIN BROWSING LAYER
+# This allows your frontend website to securely communicate with the API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins to access your API
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods (POST, GET, OPTIONS, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
+# 3. Optimized Production RAG Layer: Enriched Semantic Context Data
 RESUME_DATA = [
     "Malik Oliver works as an AI Quality Assurance Specialist at Outlier AI (01/2025 - Present), where he conducts rigorous code reviews, automated script evaluations, and functional testing on LLM outputs to guarantee technical accuracy.",
     "Core AI Engineering and Agentic Skills: Malik designs and builds intelligent conversational systems and autonomous agents using LangChain, LangGraph, RAG pipelines, Prompt Engineering, and Vector Databases. Experienced with PyTorch, Hugging Face, and deep learning architectures.",
@@ -80,7 +91,7 @@ class PurePythonVectorStore:
 
 retriever = PurePythonVectorStore(RESUME_DATA)
 
-# 3. LangGraph Multi-Step State Flow Orchestration
+# 4. LangGraph Multi-Step State Flow Orchestration
 from langgraph.graph import StateGraph, END
 
 class AgentState(TypedDict):
@@ -122,7 +133,7 @@ workflow.add_edge("generator", END)
 
 agent_executor = workflow.compile()
 
-# 4. REST API Endpoint & Structured Output Logs
+# 5. REST API Endpoint & Structured Output Logs
 class ChatRequest(BaseModel):
     message: str
 
